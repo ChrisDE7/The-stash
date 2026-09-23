@@ -1,0 +1,5 @@
+-- The source repository identifies these as starter examples, not completed work.
+-- Preserve their supplied descriptions as PRIVATE drafts; do not publish fabricated work.
+insert into public.entries(id,content) values
+('ad9ea69a-ff25-4624-b494-0d28ab7567b1','{"id":"ad9ea69a-ff25-4624-b494-0d28ab7567b1","kind":"project","title":"First Website","summary":"A starter website project.","description":"A simple starter website project entry. Replace this with screenshots, real details, and links when your project is ready.","features":[],"tags":["HTML","CSS","JavaScript"],"category":"Websites","media":[],"cover":"","links":[],"version":"","compatibility":"","comingSoon":false}'),
+('43e2c0f4-571f-4588-bab7-03d75e47c8e9','{"id":"43e2c0f4-571f-4588-bab7-03d75e47c8e9","kind":"project","title":"Game Server Map","summary":"A starter Unturned/game map project.","description":"In progress. Original entry: Jun 2026.","features":["Spawn area","Road layout","Loot zones"],"tags":["Unturned"],"category":"Unturned","media":[],"cover":"","links":[],"version":"","compatibility":"","comingSoon":false}');

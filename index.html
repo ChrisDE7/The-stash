@@ -1,246 +1,30 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Chris Portfolio</title>
-  <meta name="description" content="Chris Portfolio - projects, maps, skills, and contact.">
-  <link rel="stylesheet" href="styles.css">
-  <script>
-    const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="g" x1="10" x2="54" y1="10" y2="54"><stop stop-color="#28e070"/><stop offset="1" stop-color="#f7d84a"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="#10101d"/><text x="32" y="45" text-anchor="middle" font-size="38" font-family="Arial,sans-serif" font-weight="900" fill="url(#g)">C</text></svg>`;
-    const favicon = document.createElement("link");
-    favicon.rel = "icon";
-    favicon.href = "data:image/svg+xml," + encodeURIComponent(faviconSvg);
-    document.head.appendChild(favicon);
-  </script>
-</head>
-<body>
-  <a class="skip-link" href="#home">Skip to content</a>
-
-  <header class="topbar">
-    <nav class="shell nav" aria-label="Primary navigation">
-      <a class="brand" href="#home" aria-label="Chris Portfolio home">
-        <svg class="logo" viewBox="0 0 64 64" role="img" aria-label="Chris portfolio logo">
-          <defs>
-            <linearGradient id="logoGradient" x1="8" x2="56" y1="8" y2="56" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#28e070"/>
-              <stop offset="1" stop-color="#f7d84a"/>
-            </linearGradient>
-          </defs>
-          <rect x="4" y="4" width="56" height="56" rx="14" fill="#10101d" stroke="url(#logoGradient)" stroke-width="2"/>
-          <text x="32" y="45" text-anchor="middle" font-size="38" font-family="Arial, sans-serif" font-weight="900" fill="url(#logoGradient)">C</text>
-        </svg>
-        <span class="brand-text">
-          <span>Chris Portfolio</span>
-          <span>Projects and maps</span>
-        </span>
-      </a>
-      <div class="nav-links">
-        <a href="#home">Home</a>
-        <a href="#projects">Projects</a>
-        <a href="#maps">Maps</a>
-        <a href="#skills">Skills</a>
-        <a href="#about">About</a>
-        <a href="#footer">Contact</a>
-      </div>
-    </nav>
-  </header>
-
-  <main id="home">
-    <section class="hero">
-      <div class="shell hero-grid">
-        <div>
-          <div class="eyebrow"><span class="pulse"></span><span id="hero-status"></span></div>
-          <h1 class="gradient-text">Chris Portfolio</h1>
-          <p class="hero-copy" id="hero-copy"></p>
-          <div class="hero-actions">
-            <a class="btn primary" href="#projects">View Projects</a>
-            <a class="btn" href="#maps">View Maps</a>
-            <a class="btn" href="#footer">Contact</a>
-          </div>
-        </div>
-        <div class="hero-panel" aria-label="Animated portfolio logo preview">
-          <div class="orbit"></div>
-          <div class="orbit"></div>
-          <svg class="hero-mark" viewBox="0 0 220 220" role="img" aria-label="Large Chris portfolio logo">
-            <defs>
-              <linearGradient id="heroLogoGradient" x1="24" x2="196" y1="24" y2="196" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#28e070"/>
-                <stop offset=".52" stop-color="#a8ff3e"/>
-                <stop offset="1" stop-color="#f7d84a"/>
-              </linearGradient>
-            </defs>
-            <rect x="16" y="16" width="188" height="188" rx="42" fill="rgba(8,8,18,.78)" stroke="url(#heroLogoGradient)" stroke-width="5"/>
-            <text x="110" y="148" text-anchor="middle" font-size="118" font-family="Arial, sans-serif" font-weight="900" fill="url(#heroLogoGradient)">C</text>
-          </svg>
-          <div class="status-card">
-            <div class="status-row"><span>Current focus</span><strong id="current-focus"></strong></div>
-            <div class="meter"><span></span></div>
-            <div class="status-row"><span>Editable data</span><strong>Projects, maps, skills, contact</strong></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="projects">
-      <div class="shell">
-        <div class="section-head">
-          <div>
-            <div class="section-kicker">Projects</div>
-            <h2>SERVERS WORKED WITH</h2>
-          </div>
-          <p class="section-note">Filter projects by category, then open a card for details and links.</p>
-        </div>
-        <div class="filters" id="project-filters" aria-label="Project filters"></div>
-        <div class="grid" id="project-grid"></div>
-      </div>
-    </section>
-
-    <section id="maps">
-      <div class="shell">
-        <div class="section-head">
-          <div>
-            <div class="section-kicker">Maps</div>
-            <h2>GAME WORLDS</h2>
-          </div>
-          <p class="section-note">Track map builds, features, status, and playable world ideas.</p>
-        </div>
-        <div class="filters" id="map-filters" aria-label="Map filters"></div>
-        <div class="grid" id="map-grid"></div>
-      </div>
-    </section>
-
-    <section id="skills">
-      <div class="shell">
-        <div class="section-head">
-          <div>
-            <div class="section-kicker">Skills</div>
-            <h2>TECH STACK</h2>
-          </div>
-          <p class="section-note">Tap a skill group to preview the tools and strengths behind the work.</p>
-        </div>
-        <div class="skills-layout">
-          <div class="skill-list" id="skill-list"></div>
-          <div class="skill-detail" id="skill-detail" aria-live="polite"></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="about">
-      <div class="shell">
-        <div class="section-head">
-          <div>
-            <div class="section-kicker">About</div>
-            <h2>BUILDER PROFILE</h2>
-          </div>
-        </div>
-        <div class="about-contact">
-          <article class="about-panel">
-            <h3 id="about-title"></h3>
-            <p id="about-text"></p>
-            <div class="stats">
-              <div class="stat"><strong id="stat-projects">0</strong><span>Projects</span></div>
-              <div class="stat"><strong id="stat-maps">0</strong><span>Maps</span></div>
-              <div class="stat"><strong id="stat-skills">0</strong><span>Skill Areas</span></div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer" id="footer">
-    <div class="shell">
-      <div class="footer-card">
-        <div>
-          <div class="section-kicker">Connect</div>
-          <h2>LET'S BUILD SOMETHING USEFUL.</h2>
-        </div>
-        <div class="footer-actions">
-          <a class="social-btn discord" href="discord://-/users/_7bush7" aria-label="Discord">
-            <svg viewBox="0 -28.5 256 256" aria-hidden="true"><path fill="currentColor" d="M216.86 16.6A208.5 208.5 0 0 0 164.04 0a145.2 145.2 0 0 0-6.76 13.97 193.2 193.2 0 0 0-58.54 0A149.6 149.6 0 0 0 91.98 0a207.8 207.8 0 0 0-52.85 16.64C5.67 67.15-3.43 116.4 1.1 164.95a210.6 210.6 0 0 0 64.7 32.72 154.7 154.7 0 0 0 13.86-22.53 136.6 136.6 0 0 1-21.85-10.53c1.84-1.35 3.64-2.74 5.38-4.17a149.1 149.1 0 0 0 129.64 0c1.77 1.43 3.57 2.82 5.38 4.17a136.2 136.2 0 0 1-21.89 10.55 153.9 153.9 0 0 0 13.87 22.5 210.1 210.1 0 0 0 64.72-32.71c5.31-56.29-9.08-105.1-38.05-148.35ZM85.47 135.1c-12.64 0-23.03-11.61-23.03-25.9s10.16-25.9 23.03-25.9c12.94 0 23.27 11.72 23.03 25.9 0 14.29-10.15 25.9-23.03 25.9Zm85.06 0c-12.64 0-23.03-11.61-23.03-25.9s10.16-25.9 23.03-25.9c12.94 0 23.27 11.72 23.03 25.9 0 14.29-10.09 25.9-23.03 25.9Z"/></svg>
-          </a>
-          <a class="social-btn github" href="https://github.com/ChrisDE7" target="_blank" rel="noreferrer" aria-label="GitHub">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.9c-2.9.6-3.5-1.2-3.5-1.2-.5-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 0 1.6 1.1 1.6 1.1.9 1.6 2.4 1.1 3 .8.1-.7.4-1.1.7-1.3-2.3-.3-4.7-1.2-4.7-5A3.9 3.9 0 0 1 6.6 8c-.1-.3-.5-1.3.1-2.6 0 0 .9-.3 2.8 1.1a9.5 9.5 0 0 1 5 0c1.9-1.4 2.8-1.1 2.8-1.1.6 1.3.2 2.3.1 2.6a3.9 3.9 0 0 1 1.1 2.8c0 3.8-2.4 4.7-4.7 5 .4.3.7 1 .7 2V21c0 .3.2.6.7.5A10 10 0 0 0 12 2z" fill="currentColor"/></svg>
-          </a>
-          <a class="social-btn email" href="mailto:chrisdesigningenterprises@gmail.com" aria-label="Email">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zm8 8 8-5H4z" fill="currentColor"/></svg>
-          </a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <main class="admin admin-main" id="admin">
-    <div class="shell">
-      <section>
-        <div class="section-head">
-          <div>
-            <div class="section-kicker">Local Editor</div>
-            <h2>CHRIS ADMIN</h2>
-          </div>
-          <a class="btn" href="#">Back to Site</a>
-        </div>
-
-        <div class="admin-panel">
-          <div class="admin-warning">This editor is for local/offline use only. Do not enable it on the public live website.</div>
-          <p class="admin-help">To edit locally, set ENABLE_LOCAL_ADMIN to true, open index.html#admin, edit the projects/maps, export or copy the JSON, then send the updated index.html or JSON back. Before uploading live, set ENABLE_LOCAL_ADMIN back to false.</p>
-          <p class="admin-help">Optional local hosting command: <strong>python -m http.server 8080</strong><br>Then open: <strong>http://localhost:8080</strong></p>
-          <div class="admin-actions">
-            <button class="btn primary" id="save-admin">Save Changes</button>
-            <button class="btn" id="export-json">Export JSON</button>
-            <button class="btn" id="import-json">Import JSON</button>
-            <button class="btn" id="copy-json">Copy JSON</button>
-            <button class="btn danger" id="reset-demo">Reset Demo Data</button>
-          </div>
-          <textarea class="json-area" id="json-box" aria-label="JSON import and export area" placeholder="Exported JSON appears here. Paste JSON here to import."></textarea>
-        </div>
-
-        <div class="editor-grid">
-          <div class="admin-panel">
-            <div class="section-head">
-              <div>
-                <div class="section-kicker">Projects</div>
-                <h2>EDITOR</h2>
-              </div>
-              <button class="btn small" id="add-project">Add Project</button>
-            </div>
-            <div class="editor-list" id="project-editor"></div>
-          </div>
-
-          <div class="admin-panel">
-            <div class="section-head">
-              <div>
-                <div class="section-kicker">Maps</div>
-                <h2>EDITOR</h2>
-              </div>
-              <button class="btn small" id="add-map">Add Map</button>
-            </div>
-            <div class="editor-list" id="map-editor"></div>
-          </div>
-        </div>
-      </section>
-    </div>
-  </main>
-
-  <div class="modal" id="detail-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div class="modal-card">
-      <div class="modal-top">
-        <div></div>
-        <button class="icon-btn" id="modal-close" aria-label="Close detail modal">
-          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
-          </svg>
-        </button>
-      </div>
-      <div class="modal-content" id="modal-content"></div>
-    </div>
-  </div>
-
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-  <script src="data.js"></script>
-  <script src="app.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#181a17" />
+    <meta
+      name="description"
+      content="The Stash — Unturned maps, plugins and creative work by Chris."
+    />
+    <meta property="og:title" content="The Stash — Chris" />
+    <meta
+      property="og:description"
+      content="Unturned maps, plugins and creative work."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://chrisde7.github.io/The-stash/" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <title>The Stash — Chris / Unturned creator</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript
+      >This portfolio needs JavaScript. Contact Chris at
+      chrisdesigningenterprises@gmail.com.</noscript
+    >
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
-

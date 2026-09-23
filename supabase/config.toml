@@ -1,0 +1,10 @@
+project_id = "the-stash"
+[auth]
+enable_signup = false
+enable_anonymous_sign_ins = false
+site_url = "https://chrisde7.github.io/The-stash/"
+additional_redirect_urls = ["https://chrisde7.github.io/The-stash/"]
+[functions.media]
+verify_jwt = false
+[functions.upload]
+verify_jwt = false

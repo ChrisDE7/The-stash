@@ -1,82 +1,20 @@
-# Chris Portfolio
+# The Stash
 
-A complete editable portfolio website using only HTML, CSS, and JavaScript.
+Chris’s Unturned creator portfolio and owner content workspace. React + Vite on GitHub Pages, with Supabase Auth, PostgreSQL RLS, private Storage and two small Edge Functions.
 
-## Files
+**Current status:** redesign implemented and locally tested; real backend connection and publication remain blocked on account access. No replacement has been deployed.
 
-- `index.html` - Main page markup and inline SVG logo/favicon setup.
-- `styles.css` - Dark tech styling, responsive layout, glass cards, and animations.
-- `app.js` - Rendering, filters, modals, local editor, localStorage, import/export, and copy JSON.
-- `data.js` - Editable profile, projects, maps, skills, and `ENABLE_LOCAL_ADMIN`.
+- [Owner guide](docs/OWNER-GUIDE.md): everyday editing, limits, backup and rollback.
+- [Setup and security](docs/SETUP-AND-SECURITY.md): one-time provisioning and release gates.
+- [Inspection](docs/INSPECTION.md): verified original content and design critique.
+- [Test report](docs/TEST-REPORT.md): what passed and what still needs live verification.
 
-## Edit Content
+## Development
 
-Open `data.js` and edit:
+Use Node 22 or later. Run `npm ci`, then `npm run dev`. The base path is `/The-stash/`; routes use hashes to support GitHub Pages refreshes. With no backend variables, the application shows an honest preview/setup state and does not simulate a working owner dashboard.
 
-- `profile`
-- `projects`
-- `maps`
-- `skills`
+Public configuration keys are listed in `.env.example`. Never put privileged credentials in a `VITE_` variable. See the setup guide before connecting a project.
 
-## Add Images
+Run `npm run check`, `npm test` and `npm run build` before release. The included manual GitHub Pages workflow refuses missing backend configuration and performs basic anonymous-access checks.
 
-Put your images beside the site files or inside an `images` folder, then set `previewImage` in `data.js`.
-
-Example:
-
-```js
-previewImage: "images/my-project.png",
-previewGradient: ""
-```
-
-Use square-ish or wide images for best results. The cards use `object-fit: cover`, so images stay neat instead of stretching weirdly.
-
-The site includes exactly two starter examples:
-
-- First Website
-- Game Server Map
-
-## Local Editor
-
-The local editor is disabled by default:
-
-```js
-const ENABLE_LOCAL_ADMIN = false;
-```
-
-To edit locally, set it to `true`, open:
-
-```text
-index.html#admin
-```
-
-You can add, edit, delete, save, export JSON, import JSON, copy JSON, and reset demo data.
-
-This editor is for local/offline use only. Do not enable it on the public live website.
-
-Before uploading live, set:
-
-```js
-const ENABLE_LOCAL_ADMIN = false;
-```
-
-## Run Locally
-
-You can open `index.html` directly in a browser.
-
-For local hosting, run this inside the folder:
-
-```text
-python -m http.server 8080
-```
-
-Then open:
-
-```text
-http://localhost:8080
-```
-
-## Future Security
-
-Static HTML is not real security. The code includes comments showing where Google Auth, a backend API, and database saving could be added later.
-
+The original starter entries migrate as private drafts, not fictional completed projects. No plugin descriptions, screenshots or videos were present in the source repository. The original source files and rollback tag are preserved.
