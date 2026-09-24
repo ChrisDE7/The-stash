@@ -1,6 +1,6 @@
 # Verification record — September 24, 2026
 
-**Release status: published successfully on GitHub Pages, September 24, 2026.** [Build and deployment run](https://github.com/ChrisDE7/The-stash/actions/runs/35938981532), deployed commit `7196a01`.
+**Release status: published successfully on GitHub Pages, September 24, 2026.** [Activity and reviews deployment](https://github.com/ChrisDE7/The-stash/actions/runs/35965123923), deployed commit `99688c2`. [Initial owner-workspace deployment](https://github.com/ChrisDE7/The-stash/actions/runs/35938981532).
 
 ## Live Supabase verification — September 24
 
@@ -12,6 +12,7 @@
 - Local browser review creation/publication displayed the correct rating, display name and reviewed item in a separate public tab. Used disposable in-memory data only; no fake reviews were published to production.
 - Desktop empty-state layout and a 390px phone review layout were inspected; no horizontal overflow was observed.
 - Activity is session-based, approximate, and not bot-proof. Details and limitations are documented in the owner guide and public count explanation.
+- All six tests, TypeScript and production build passed. GitHub Actions deployment succeeded, the live homepage displays the new section, and the live counter recorded the browser verification visit.
 
 - Owner email/password login works in the browser; `is_owner()` is true.
 - Both deployed functions use their custom access checks, with the legacy JWT gateway disabled.
