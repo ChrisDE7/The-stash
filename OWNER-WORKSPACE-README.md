@@ -245,12 +245,12 @@ After deployment, normal content edits happen inside the owner workspace without
 
 ## Setup checklist
 
-- [ ] Project created and all three migrations applied once.
-- [ ] Your Auth user created, confirmed, and assigned owner access.
-- [ ] No unintended owners; public signups and anonymous sign-in disabled.
-- [ ] Both Edge Functions deployed; Storage remains private.
-- [ ] `.env.local` configured and local owner login works.
-- [ ] Site copy/categories updated and starter drafts reviewed.
-- [ ] Real permission, upload, draft, publish, and unpublish checks completed.
-- [ ] GitHub variables configured and verified release deployed.
+- [x] Project created and all three migrations applied once.
+- [x] Your Auth user created, confirmed, and assigned owner access.
+- [x] Owner authorization checked; public signups and anonymous sign-in disabled during initial setup.
+- [x] Both Edge Functions deployed; Storage remains private.
+- [x] `.env.local` configured and local owner login works.
+- [x] Site copy/categories updated; starter drafts preserved privately for your review.
+- [x] Real permission, upload, draft, publish, and unpublish checks completed.
+- [x] GitHub variables configured and verified release deployed.
 - [ ] Owner URL bookmarked and backup process understood.

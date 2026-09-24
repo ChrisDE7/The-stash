@@ -2,7 +2,7 @@
 
 Chris’s Unturned creator portfolio and owner content workspace. React + Vite on GitHub Pages, with Supabase Auth, PostgreSQL RLS, private Storage and two small Edge Functions.
 
-**Owner access and live backend verified September 24, 2026.** See the [verification record](docs/TEST-REPORT.md) for release status.
+**Published on GitHub Pages September 24, 2026, with owner access and live backend verified.** See the [verification record](docs/TEST-REPORT.md).
 
 - [Public portfolio](https://chrisde7.github.io/The-stash/)
 - [Owner login](https://chrisde7.github.io/The-stash/#/admin)

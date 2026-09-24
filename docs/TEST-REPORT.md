@@ -1,6 +1,6 @@
 # Verification record — September 24, 2026
 
-**Release status: backend verified; final GitHub Pages deployment in progress.**
+**Release status: published successfully on GitHub Pages, September 24, 2026.** [Build and deployment run](https://github.com/ChrisDE7/The-stash/actions/runs/35938981532), deployed commit `7196a01`.
 
 ## Live Supabase verification — September 24
 
@@ -12,7 +12,10 @@
 - Published media returned the original bytes. A missing API-key header on the media function's storage request caused HTTP 503; adding it fixed the issue.
 - Deletion of a referenced media asset was rejected. The temporary entry and asset were removed after verification.
 - Site introduction/about copy was updated through the real owner dashboard.
+- Real browser PNG upload generated private previews and retained the original. Byte-range delivery returned HTTP 206 with the correct requested bytes. Temporary browser test media was removed.
+- Map/plugin categories were saved in the owner dashboard; historical drafts were preserved.
 - GitHub authentication restored; Pages configured for Actions; frontend public configuration stored as repository variables.
+- GitHub Actions build and deploy jobs succeeded. The public site and production owner route load at `https://chrisde7.github.io/The-stash/`.
 - Map collections now use entry type independently of category names; featured ordering works within each homepage collection. Owner code loads only when the owner route opens.
 
 `scripts/check-owner.mjs` is an opt-in live integration check. Supply `OWNER_EMAIL` and `OWNER_PASSWORD` through process environment and set `VERIFY_OWNER_WORKFLOW=yes`; run with the ignored `.env.local`. It briefly publishes generated test content, then removes only the content created by that run. Never put credentials in source files.
