@@ -13,7 +13,7 @@ export function blank(kind: "project" | "plugin"): Entry {
     description: "",
     features: [],
     tags: [],
-    category: "",
+    category: kind === "plugin" ? "Unturned Plugins" : "Unturned Maps",
     media: [],
     cover: "",
     links: [],

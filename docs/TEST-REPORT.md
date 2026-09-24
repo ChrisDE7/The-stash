@@ -1,6 +1,21 @@
-# Verification record — September 23, 2026
+# Verification record — September 24, 2026
 
-**Release status: not deployed. Real Supabase integration and GitHub authentication remain required.**
+**Release status: backend verified; final GitHub Pages deployment in progress.**
+
+## Live Supabase verification — September 24
+
+- Owner email/password login works in the browser; `is_owner()` is true.
+- Both deployed functions use their custom access checks, with the legacy JWT gateway disabled.
+- Anonymous draft/media access is denied; anonymous uploads return 403.
+- Real PNG upload, authenticated private download, and anonymous private-storage denial pass.
+- A generated temporary entry was saved privately, published, edited as a private revision, and unpublished. Public content retained the published version until explicitly republished.
+- Published media returned the original bytes. A missing API-key header on the media function's storage request caused HTTP 503; adding it fixed the issue.
+- Deletion of a referenced media asset was rejected. The temporary entry and asset were removed after verification.
+- Site introduction/about copy was updated through the real owner dashboard.
+- GitHub authentication restored; Pages configured for Actions; frontend public configuration stored as repository variables.
+- Map collections now use entry type independently of category names; featured ordering works within each homepage collection. Owner code loads only when the owner route opens.
+
+`scripts/check-owner.mjs` is an opt-in live integration check. Supply `OWNER_EMAIL` and `OWNER_PASSWORD` through process environment and set `VERIFY_OWNER_WORKFLOW=yes`; run with the ignored `.env.local`. It briefly publishes generated test content, then removes only the content created by that run. Never put credentials in source files.
 
 ## Passed locally
 
@@ -19,9 +34,9 @@
 
 Test images were artificial color blocks. Video fixtures were MDN's CC0 flower clips, downloaded only into ignored `test-results/fixtures`; they are not portfolio content and are not shipped. Temporary entries were deleted, and stopping the in-memory test service discards remaining fixture assets and category changes.
 
-## Still required against the real project
+## Scope and remaining manual checks
 
-The hosted Auth configuration, Storage policies, function deployment, production byte-range streaming, direct anonymous/non-owner requests, all owner upload and editing actions, and live Pages deployment must be verified after the owner supplies access. Do not present this report as a production security certification.
+The live checks above complement the local RLS tests; they are not a production security certification. Non-owner database rules are covered locally; no extra production account was created for testing.
 
 Additional browser checks to complete during real integration include pointer drag-and-drop/reordering (the accessible buttons were exercised locally), file replacement and shared-asset permanent-deletion errors, oversized-file error UI, provider-restricted embed fallback, category/featured/site-setting persistence, admin phone/tablet layouts, and production console/network checks.
 

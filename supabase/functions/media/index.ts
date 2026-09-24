@@ -8,7 +8,8 @@ Deno.serve(async req=>{
  if(ref.error||!ref.data?.length)return json({error:'Not found'},404);
  const {data:asset}=await admin.from('media').select('*').eq('id',id).single();if(!asset)return json({error:'Not found'},404);
  const path=asset.variants[variant]||asset.variants.original;
- const storageHeaders:Record<string,string>={Authorization:`Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!}`};
+ const serviceKey=Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+ const storageHeaders:Record<string,string>={Authorization:`Bearer ${serviceKey}`,apikey:serviceKey};
  const range=req.headers.get('Range');
  if(range){if(!/^bytes=\d+-\d*$/.test(range))return new Response(null,{status:416,headers:cors});storageHeaders.Range=range;}
  const upstream=await fetch(`${Deno.env.get('SUPABASE_URL')!}/storage/v1/object/authenticated/portfolio/${path}`,{headers:storageHeaders});

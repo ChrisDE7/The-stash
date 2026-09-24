@@ -1,19 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { ArrowUpRight, ArrowDown, Menu, X } from "lucide-react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import { configured, db, defaults, query } from "./api";
 import { Cover, Empty, EntryDetail } from "./ui";
 import { safeUrl } from "./validation.js";
 import type { Entry, Settings } from "./types";
-import Admin from "./admin";
+const Admin = lazy(() => import("./admin"));
+import Atmosphere from "./atmosphere";
 import "./style.css";
+import "./portfolio.css";
 function App() {
   const [route, setRoute] = useState(location.hash.slice(1) || "/"),
     [settings, setSettings] = useState<Settings>(defaults),
     [entries, setEntries] = useState<Entry[]>([]),
     [loading, setLoading] = useState(configured),
     [error, setError] = useState(""),
-    [filter, setFilter] = useState("All"),
+    [filters, setFilters] = useState<Record<string, string>>({}),
     [menu, setMenu] = useState(false);
   const isAdmin = route.startsWith("/admin");
   async function refresh() {
@@ -52,7 +54,7 @@ function App() {
         }
       }
       setRoute(location.hash.slice(1) || "/");
-      setFilter("All");
+      setFilters({});
       setMenu(false);
       window.scrollTo(0, 0);
     };
@@ -76,17 +78,25 @@ function App() {
       .querySelector('meta[name="description"]')
       ?.setAttribute("content", settings.description);
   }, [settings]);
-  if (isAdmin) return <Admin />;
+  if (isAdmin) return <Suspense fallback={<main className="login" role="status">Opening your workspace…</main>}><Admin /></Suspense>;
   const current = route.startsWith("/work/")
     ? entries.find((e) => e.id === route.split("/")[2])
     : undefined;
   const plugins = route === "/plugins",
-    work = route === "/work",
+    maps = route === "/maps" || route === "/work",
     about = route === "/about",
     home = route === "/";
+  const isMap = (e: Entry) => e.kind === "project";
   const cards = (items: Entry[]) => (
     <div className="cards">
-      {items.map((e, i) => (
+      {[...items].sort((a, b) => {
+        if (!home) return 0;
+        const rank = (id: string) => {
+          const index = settings.featured.indexOf(id);
+          return index < 0 ? Number.MAX_SAFE_INTEGER : index;
+        };
+        return rank(a.id) - rank(b.id);
+      }).map((e, i) => (
         <a className="work-card" key={e.id} href={"#/work/" + e.id}>
           <div className="card-media">
             <Cover entry={e} />
@@ -125,8 +135,8 @@ function App() {
           </h2>
         </div>
         {home && (
-          <a className="text-link" href="#/work">
-            Explore all work <ArrowUpRight size={18} />
+          <a className="text-link" href={title === "Unturned Maps" ? "#/maps" : "#/plugins"}>
+            {title === "Unturned Maps" ? "Explore all maps" : "Explore all plugins"} <ArrowUpRight size={18} />
           </a>
         )}
       </div>
@@ -141,28 +151,28 @@ function App() {
             ].map((c) => (
               <button
                 key={c}
-                aria-pressed={filter === c}
-                onClick={() => setFilter(c)}
+                aria-pressed={(filters[title] || "All") === c}
+                onClick={() => setFilters((previous) => ({ ...previous, [title]: c }))}
               >
                 {c}
               </button>
             ))}
           </div>
           {cards(
-            items.filter((e) => filter === "All" || e.category === filter),
+            items.filter((e) => !filters[title] || filters[title] === "All" || e.category === filters[title]),
           )}
         </>
       )}
       {!loading && !error && !items.length && (
         <Empty
           title={
-            plugins ? "Plugins are on the way." : "A collection in the making."
+            title === "Unturned Plugins" ? "Plugins are on the way." : maps || title === "Unturned Maps" ? "New worlds are taking shape." : "A collection in the making."
           }
         >
           <p>
-            {plugins
+            {title === "Unturned Plugins"
               ? "Plugin details will appear here when published."
-              : "New work will appear here when it is ready to share."}
+              : maps || title === "Unturned Maps" ? "Map screenshots, places to explore, and build details will appear here as they are shared." : "New work will appear here when it is ready to share."}
           </p>
           <a className="text-link" href="#/about">
             Get in touch <ArrowUpRight size={16} />
@@ -172,7 +182,8 @@ function App() {
     </section>
   );
   return (
-    <>
+    <div className="public-site">
+      <Atmosphere />
       <a
         className="skip"
         href="#content"
@@ -187,7 +198,7 @@ function App() {
       <header className="topbar">
         <a className="brand" href="#/">
           <span className="brand-mark">
-            S<span>·</span>
+            C
           </span>
           <span>
             {settings.title}
@@ -198,16 +209,16 @@ function App() {
           className="menu-toggle"
           aria-label="Toggle navigation"
           aria-expanded={menu}
+          aria-controls="main-navigation"
           onClick={() => setMenu(!menu)}
         >
           {menu ? <X /> : <Menu />}
         </button>
-        <nav className={menu ? "open" : ""} aria-label="Main navigation">
-          <a href="#/work" aria-current={work ? "page" : undefined}>
-            Work
-          </a>
+        <nav id="main-navigation" className={menu ? "open" : ""} aria-label="Main navigation">
+          <a href="#/" aria-current={home ? "page" : undefined}>Home</a>
+          <a href="#/maps" aria-current={maps ? "page" : undefined}>Unturned Maps</a>
           <a href="#/plugins" aria-current={plugins ? "page" : undefined}>
-            Plugins
+            Unturned Plugins
           </a>
           <a href="#/about" aria-current={about ? "page" : undefined}>
             About & contact <ArrowUpRight size={14} />
@@ -217,34 +228,33 @@ function App() {
       <main id="content" className="shell" tabIndex={-1}>
         {home && (
           <section className="hero">
-            <div className="hero-top">
-              <span className="eyebrow">
-                <span className="dot" /> Independent creator
-              </span>
-              <span className="edition">UNTURNED & BEYOND</span>
-            </div>
-            <h1>
-              A place for
-              <br />
-              everything I <em>build.</em>
-            </h1>
-            <div className="hero-bottom">
+            <div className="hero-copy">
+              <span className="eyebrow"><span className="dot" /> CHRIS / INDEPENDENT CREATOR</span>
+              <h1>Small details.<br /><em>Whole worlds.</em></h1>
               <p>{settings.intro}</p>
-              <a className="button primary" href="#/work">
-                View my work <ArrowDown size={18} />
-              </a>
+              <div className="hero-actions">
+                <a className="button primary" href="#/maps">Explore maps <ArrowUpRight size={18} /></a>
+                <a className="button" href="#/plugins">Explore plugins <ArrowUpRight size={18} /></a>
+              </div>
+
             </div>
-            <div className="hero-rule">
-              <span>THE STASH</span>
-              <span>MAPS · PLUGINS · CREATIVE WORK</span>
-              <span>BY CHRIS</span>
+            <div className="creator-panel" aria-label="Chris creator emblem">
+              <div className="panel-caption"><span>THE STASH</span><span>BY CHRIS</span></div>
+              <div className="creator-emblem" aria-hidden="true">C</div>
+              <div className="creator-focus"><span>THE CREATIVE SIDE OF UNTURNED</span><strong>Built one detail at a time.</strong></div>
             </div>
+          </section>
+        )}
+        {(maps || plugins) && (
+          <section className="page-intro">
+            <span className="eyebrow">{maps ? "Explore the worlds" : plugins ? "Tools for your server" : "Ideas made real"}</span>
+            <h1>{maps ? "Places worth exploring." : plugins ? "Small tools. More possibilities." : "A little of everything I build."}</h1>
+            <p>{maps ? "Unturned environments, from the big picture to the smallest detail. Explore screenshots and the stories behind each map." : plugins ? "Plugins and experiments for Unturned, with features, previews, and useful links in one place." : "Unturned maps and plugins, collected here as they take shape."}</p>
           </section>
         )}
         {!configured && (
           <p className="notice">
-            Preview only — the content service has not been connected. The
-            existing live site has not been replaced.
+            Design preview · Project galleries are being prepared.
           </p>
         )}
         {loading && (
@@ -257,34 +267,22 @@ function App() {
             {error} <button onClick={refresh}>Try again</button>
           </div>
         )}
-        {home &&
-          settings.featured.some((id) => entries.some((e) => e.id === id)) &&
-          collection(
-            settings.featured
-              .map((id) => entries.find((e) => e.id === id))
-              .filter(Boolean) as Entry[],
-            "Selected work",
-          )}
-        {home &&
-          !settings.featured.some((id) => entries.some((e) => e.id === id)) &&
-          collection(entries, "Latest work")}
-        {work &&
-          collection(
-            entries.filter((e) => e.kind === "project"),
-            "Projects & worlds",
-          )}
+        {home && collection(entries.filter(isMap), "Unturned Maps")}
+        {home && collection(entries.filter((e) => e.kind === "plugin"), "Unturned Plugins")}
+        {home && <section className="contact-banner"><div><span className="eyebrow">Have a project in mind?</span><h2>Let’s make something worth exploring.</h2></div><a className="button primary" href="#/about">Get in touch <ArrowUpRight size={18} /></a></section>}
+        {maps && collection(entries.filter(isMap), "Unturned Maps")}
         {plugins &&
           collection(
             entries.filter((e) => e.kind === "plugin"),
-            "Plugins",
+            "Unturned Plugins",
           )}
         {current && (
           <>
             <a
               className="back-link"
-              href={current.kind === "plugin" ? "#/plugins" : "#/work"}
+              href={current.kind === "plugin" ? "#/plugins" : isMap(current) ? "#/maps" : "#/work"}
             >
-              ← Back to {current.kind === "plugin" ? "plugins" : "work"}
+              ← Back to {current.kind === "plugin" ? "plugins" : isMap(current) ? "maps" : "projects"}
             </a>
             <EntryDetail entry={current} />
           </>
@@ -337,7 +335,7 @@ function App() {
             </div>
           </section>
         )}
-        {!home && !work && !plugins && !about && !current && !loading && (
+        {!home && !maps && !plugins && !about && !current && !loading && (
           <Empty title="This page isn’t available.">
             <p>It may have been unpublished.</p>
             <a href="#/">Back to the stash</a>
@@ -350,11 +348,9 @@ function App() {
           <span className="muted"> / Chris</span>
         </a>
         <span>Made for the things worth making.</span>
-        <a href="#/admin">
-          Owner sign in <ArrowUpRight size={14} />
-        </a>
+
       </footer>
-    </>
+    </div>
   );
 }
 class Boundary extends React.Component<

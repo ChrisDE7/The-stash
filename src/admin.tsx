@@ -38,8 +38,8 @@ import { move, safeUrl } from "./validation.js";
 import type { Asset, Entry, Row, Settings } from "./types";
 const sections = [
   ["Overview", LayoutDashboard],
-  ["Projects", Layers],
-  ["Plugins", Package],
+  ["Unturned Maps", Layers],
+  ["Unturned Plugins", Package],
   ["Media", Image],
   ["Categories", Tags],
   ["Site Settings", SettingsIcon],
@@ -254,7 +254,7 @@ export default function Admin() {
     return (
       <main className="login">
         <a className="brand" href="#/">
-          S· / The Stash
+          C / The Stash
         </a>
         <div className="panel">
           <span className="eyebrow">Owner dashboard</span>
@@ -287,7 +287,7 @@ export default function Admin() {
     return (
       <main className="login">
         <a className="brand" href="#/">
-          S· / The Stash
+          C / The Stash
         </a>
         <form className="panel" onSubmit={login}>
           <span className="eyebrow">Your creative workspace</span>
@@ -412,7 +412,7 @@ export default function Admin() {
     <div className="admin-layout">
       <aside className="sidebar">
         <a className="brand" href="#/">
-          S·{" "}
+          C{" "}
           <span>
             The Stash<small>OWNER WORKSPACE</small>
           </span>
@@ -499,35 +499,39 @@ export default function Admin() {
                   {section === "Overview" ? "Welcome back, Chris." : section}
                 </h1>
               </div>
-              {["Projects", "Plugins"].includes(section) && (
+              {["Unturned Maps", "Unturned Plugins"].includes(section) && (
                 <button
                   className="primary"
                   onClick={() =>
                     setEditing(
-                      blank(section === "Plugins" ? "plugin" : "project"),
+                      blank(section === "Unturned Plugins" ? "plugin" : "project"),
                     )
                   }
                 >
                   <Plus size={18} />
-                  Add {section === "Plugins" ? "plugin" : "project"}
+                  Add {section === "Unturned Plugins" ? "plugin" : "map"}
                 </button>
               )}
             </div>
             {section === "Overview" && (
               <>
+                <section className="panel owner-guide">
+                  <h2>From idea to published work</h2>
+                  <ol><li><strong>Add a map or plugin</strong><span>Give it a name and a short description.</span></li><li><strong>Add your media</strong><span>Upload screenshots or video, then choose a cover.</span></li><li><strong>Preview and publish</strong><span>Save privately as a draft. Publish when you are ready.</span></li></ol>
+                </section>
                 <div className="quick-actions">
                   <button onClick={() => setEditing(blank("project"))}>
                     <Layers />
-                    <strong>Add project</strong>
+                    <strong>Add map</strong>
                     <span>
-                      Share a map or a new creation <Plus size={16} />
+                      Add screenshots and describe your map <Plus size={16} />
                     </span>
                   </button>
                   <button onClick={() => setEditing(blank("plugin"))}>
                     <Package />
                     <strong>Add plugin</strong>
                     <span>
-                      Give your plugin a home <Plus size={16} />
+                      Add features, downloads, and previews <Plus size={16} />
                     </span>
                   </button>
                   <button
@@ -548,7 +552,7 @@ export default function Admin() {
                     <strong>
                       {rows.filter((r) => r.content.kind === "project").length}
                     </strong>
-                    <span>Projects</span>
+                    <span>Maps</span>
                   </div>
                   <div>
                     <strong>
@@ -576,12 +580,12 @@ export default function Admin() {
                 </section>
               </>
             )}
-            {["Projects", "Plugins"].includes(section) &&
+            {["Unturned Maps", "Unturned Plugins"].includes(section) &&
               list(
                 rows.filter(
                   (r) =>
                     r.content.kind ===
-                    (section === "Plugins" ? "plugin" : "project"),
+                    (section === "Unturned Plugins" ? "plugin" : "project"),
                 ),
               )}
             {section === "Media" && (
@@ -974,8 +978,8 @@ function SiteSettings({
       <section className="panel">
         <h2>Featured work</h2>
         <p className="muted">
-          Choose the entries shown on the homepage. Unpublished entries stay
-          hidden.
+          Move selected entries to the front of their homepage collection, in
+          your chosen order. Unpublished entries stay hidden.
         </p>
         {value.featured.map((id, i) => (
           <div className="category-row" key={id}>

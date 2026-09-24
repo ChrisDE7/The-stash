@@ -15,17 +15,17 @@ export const db = configured
   : null;
 export const defaults: Settings = {
   title: "The Stash",
-  intro: "Unturned maps, plugins & creative work by Chris.",
-  about: "Websites, game maps, experiments, and creative tech work.",
+  intro: "Unturned maps & plugins by Chris.",
+  about: "I create Unturned maps and plugins — places to explore and tools that bring servers to life.",
   contactIntro: "Reach out for project and server work.",
   discord: "_7bush7",
   links: [
     { label: "Email Chris", url: "mailto:chrisdesigningenterprises@gmail.com" },
     { label: "GitHub", url: "https://github.com/ChrisDE7" },
   ],
-  categories: ["Unturned", "Websites"],
+  categories: ["Unturned Maps", "Unturned Plugins"],
   featured: [],
-  description: "The Stash — Unturned maps, plugins and creative work by Chris.",
+  description: "The Stash — Unturned maps and plugins by Chris.",
 };
 export async function query<R extends { data: unknown; error: any }>(
   p: PromiseLike<R>,

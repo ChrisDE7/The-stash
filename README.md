@@ -2,8 +2,13 @@
 
 Chris’s Unturned creator portfolio and owner content workspace. React + Vite on GitHub Pages, with Supabase Auth, PostgreSQL RLS, private Storage and two small Edge Functions.
 
-**Current status:** redesign implemented and locally tested; real backend connection and publication remain blocked on account access. No replacement has been deployed.
+**Owner access and live backend verified September 24, 2026.** See the [verification record](docs/TEST-REPORT.md) for release status.
 
+- [Public portfolio](https://chrisde7.github.io/The-stash/)
+- [Owner login](https://chrisde7.github.io/The-stash/#/admin)
+- Start with [the step-by-step login and image guide](OWNER-WORKSPACE-README.md). Content changes publish from the dashboard without a GitHub deployment.
+
+- [Owner workspace setup](OWNER-WORKSPACE-README.md): step-by-step account, backend, sign-in, and deployment instructions.
 - [Owner guide](docs/OWNER-GUIDE.md): everyday editing, limits, backup and rollback.
 - [Setup and security](docs/SETUP-AND-SECURITY.md): one-time provisioning and release gates.
 - [Inspection](docs/INSPECTION.md): verified original content and design critique.

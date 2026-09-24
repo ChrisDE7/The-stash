@@ -20,13 +20,24 @@ if (!settings.ok || (await settings.json()).length !== 1)
   throw Error("Published site settings are unavailable");
 for (const table of ["entries", "media"]) {
   const r = await fetch(url + "/rest/v1/" + table + "?select=*", { headers });
-  if (r.ok && (await r.json()).length)
-    throw Error("Draft data is anonymously exposed");
+  if (r.ok) {
+    const rows = await r.json();
+    if (!Array.isArray(rows) || rows.length)
+      throw Error("Draft data is anonymously exposed or response is invalid");
+  } else if (![401, 403].includes(r.status)) {
+    throw Error(`Cannot verify anonymous ${table} access: HTTP ${r.status}`);
+  }
 }
 const media = await fetch(
   url + "/functions/v1/media?id=00000000-0000-4000-8000-000000000000",
 );
-if (media.status !== 404) throw Error("Media access gate is not ready");
+const mediaBody = await media.json().catch(() => null);
+if (media.status !== 404 || mediaBody?.error !== "Not found")
+  throw Error("Media access gate is not ready: deploy the media function first");
+const upload = await fetch(url + "/functions/v1/upload", { method: "POST" });
+const uploadBody = await upload.json().catch(() => null);
+if (upload.status !== 403 || uploadBody?.error !== "Owner access required")
+  throw Error("Upload access gate is not ready: verify the upload function");
 console.log(
   "Basic deployment configuration and anonymous-access checks passed. Owner workflow verification must also be recorded before dispatching deployment.",
 );
