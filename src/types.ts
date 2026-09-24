@@ -42,6 +42,7 @@ export type Asset = {
   created_at: string;
 };
 export type Settings = {
+  reviews?: Review[];
   title: string;
   intro: string;
   about: string;
@@ -51,4 +52,11 @@ export type Settings = {
   categories: string[];
   featured: string[];
   description: string;
+};
+export type Review = {
+  id: string;
+  name: string;
+  product: string;
+  text: string;
+  rating: number;
 };

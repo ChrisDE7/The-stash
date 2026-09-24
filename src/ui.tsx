@@ -8,6 +8,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { privateMedia, publicMedia } from "./api";
+import { recordActivity } from "./activity";
 import { safeUrl, videoLink, move } from "./validation.js";
 import type { Asset, Entry, Link, MediaItem } from "./types";
 export const IconImage = ImageIcon;
@@ -339,6 +340,7 @@ export function EntryDetail({
               className="button"
               key={i}
               href={safeUrl(l.url)!}
+              onClick={() => { if (!preview && l.type === 'Download') void recordActivity('download', entry.id); }}
               target={l.url.startsWith("https:") ? "_blank" : undefined}
               rel="noopener noreferrer"
             >

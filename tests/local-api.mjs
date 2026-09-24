@@ -37,6 +37,7 @@ await db.exec(
     "utf8",
   ),
 );
+await db.exec(await readFile(new URL('../supabase/migrations/202609240001_activity.sql', import.meta.url), 'utf8'));
 const owner = "11111111-1111-4111-8111-111111111111",
   other = "22222222-2222-4222-8222-222222222222";
 await db.exec(
@@ -140,6 +141,9 @@ async function handle(req, res) {
       const name = u.pathname.split("/").pop();
       const funcs = {
         is_owner: [],
+        activity_totals: [],
+        owner_activity: [],
+        record_activity: ['session_id', 'event', 'target'],
         save_categories: ["categories"],
         save_entry: ["entry", "publish_now"],
         unpublish_entry: ["entry_id"],

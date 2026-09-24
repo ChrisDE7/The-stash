@@ -12,6 +12,7 @@ import {
   Search,
   Download,
   Upload,
+  BarChart3,
 } from "lucide-react";
 import {
   db,
@@ -36,6 +37,7 @@ import {
 import Editor, { blank } from "./editor";
 import { move, safeUrl } from "./validation.js";
 import type { Asset, Entry, Row, Settings } from "./types";
+import { CommunityAdmin } from "./community-admin";
 const sections = [
   ["Overview", LayoutDashboard],
   ["Unturned Maps", Layers],
@@ -43,6 +45,7 @@ const sections = [
   ["Media", Image],
   ["Categories", Tags],
   ["Site Settings", SettingsIcon],
+  ["Activity & Reviews", BarChart3],
 ] as const;
 function download(data: Blob, name: string) {
   const u = URL.createObjectURL(data),
@@ -708,6 +711,7 @@ export default function Admin() {
                 }
               />
             )}
+            {section === "Activity & Reviews" && <CommunityAdmin settings={settings} onSaved={load} />}
           </>
         )}
         <input

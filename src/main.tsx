@@ -7,6 +7,8 @@ import { safeUrl } from "./validation.js";
 import type { Entry, Settings } from "./types";
 const Admin = lazy(() => import("./admin"));
 import Atmosphere from "./atmosphere";
+import { Community } from "./community";
+import { recordActivity } from "./activity";
 import "./style.css";
 import "./portfolio.css";
 function App() {
@@ -18,6 +20,12 @@ function App() {
     [filters, setFilters] = useState<Record<string, string>>({}),
     [menu, setMenu] = useState(false);
   const isAdmin = route.startsWith("/admin");
+  useEffect(() => {
+    if (isAdmin) return;
+    void recordActivity('visit');
+    const id = route.startsWith('/work/') ? route.split('/')[2] : '';
+    if (id && entries.some(e => e.id === id)) void recordActivity('project', id);
+  }, [route, isAdmin, entries]);
   async function refresh() {
     if (!db) return;
     try {
@@ -341,6 +349,7 @@ function App() {
             <a href="#/">Back to the stash</a>
           </Empty>
         )}
+        {home && <Community settings={settings} />}
       </main>
       <footer className="shell footer">
         <a className="brand" href="#/">

@@ -27,6 +27,13 @@ Images: JPEG, PNG or WebP, up to **12 MB each**. Videos: MP4 or WebM, up to **40
 
 ## Everyday settings and backups
 
+- **Activity & Reviews** shows site visits, project views, download clicks and the last 30 days of activity (UTC). The homepage displays the aggregate counts at the bottom.
+- Visits count browser sessions per UTC day, not unique people. A project view or download click counts once per item per session per UTC day. Local previews and signed-in owner sessions are excluded, and browser privacy opt-outs are respected. These are approximate activity counts, not audited analytics or confirmed downloads; bots can affect them.
+- To count a download link, set its **Link type** to **Download** in the entry editor, then publish the entry.
+- To share customer feedback, open **Activity & Reviews → Add customer review**, enter the customer's chosen display name, item, rating and actual review, then click **Publish reviews**. Share only feedback you have permission to publish. Visitors cannot post directly. Removing a review from the editor takes effect publicly only after **Publish reviews**.
+- Review counts and average ratings are calculated from the reviews you publish. There is no verified-purchase claim. Purchase counts and payment integration are not enabled; a future checkout needs to verify sales first.
+- Counters started with this feature; historical visits cannot be reconstructed. Activity stores a random session identifier, event type, item identifier and UTC date in a private database table; it does not store visitor names, emails, IP addresses or referrers. Anonymous access exposes totals only; the daily report requires owner access.
+
 - **Site Settings** edits the introduction, about text, contact links and search description. Saving makes those settings public immediately.
 - **Featured work** moves chosen entries to the front of their respective homepage collections.
 - **Categories** manages your labels; renaming a category does not hide a map.

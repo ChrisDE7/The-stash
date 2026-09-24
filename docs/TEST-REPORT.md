@@ -4,6 +4,15 @@
 
 ## Live Supabase verification — September 24
 
+### Activity and reviews addition
+
+- Added homepage aggregate counters and owner-managed customer reviews. No purchase tracking or public review submission is enabled.
+- Applied `202609240001_activity.sql` to production, with RLS enabled on the private activity table. Live anonymous aggregate reads succeed; anonymous owner-report requests are denied.
+- Added a PostgreSQL test covering constrained events, duplicate suppression, unpublished targets, private-row denial, owner-report permissions and exclusion of owner visits.
+- Local browser review creation/publication displayed the correct rating, display name and reviewed item in a separate public tab. Used disposable in-memory data only; no fake reviews were published to production.
+- Desktop empty-state layout and a 390px phone review layout were inspected; no horizontal overflow was observed.
+- Activity is session-based, approximate, and not bot-proof. Details and limitations are documented in the owner guide and public count explanation.
+
 - Owner email/password login works in the browser; `is_owner()` is true.
 - Both deployed functions use their custom access checks, with the legacy JWT gateway disabled.
 - Anonymous draft/media access is denied; anonymous uploads return 403.
